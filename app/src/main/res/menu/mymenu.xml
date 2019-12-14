@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/reportIncident"
-        android:title="Report Incident"/>
+    <item android:id="@+id/library"
+        android:title="Song Library"/>
 
-    <item android:id="@+id/viewIncident"
-        android:title="View Incident"/>
+    <item android:id="@+id/newPlayList"
+        android:title="Add new playlist"/>
+
+    <item android:id="@+id/viewPlayLists"
+        android:title="View Playlists"/>
+
+
 
 </menu>

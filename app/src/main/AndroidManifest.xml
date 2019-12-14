@@ -10,6 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".SignIn"></activity>
+        <activity android:name=".PlaylistList"></activity>
+        <activity android:name=".NewPlayList"></activity>
         <activity android:name=".SignUp"></activity>
         <activity android:name=".Library"></activity>
         <activity android:name=".MainActivity">

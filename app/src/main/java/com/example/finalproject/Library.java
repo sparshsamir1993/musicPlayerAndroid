@@ -1,10 +1,13 @@
 package com.example.finalproject;
 
+import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -62,6 +65,29 @@ public class Library extends AppCompatActivity {
             }
         });
 
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.mymenu,menu);
+        return true;
+    }
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId())
+        {
+            case R.id.library:
+                Intent libraryIntent = new Intent(Library.this,Library.class);
+                startActivity(libraryIntent);
+                return  true;
+
+            case R.id.newPlayList:
+                Intent viewIntent = new Intent(Library.this,PlaylistList.class);
+                startActivity(viewIntent);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 }

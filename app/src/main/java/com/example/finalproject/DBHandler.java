@@ -20,6 +20,7 @@ public class DBHandler extends SQLiteOpenHelper {
     public static final String DB_NAME = "MusicApp.db";
     public static final String TABLE_USERS = "tbl_Users";
     public static final String TABLE_SONGS = "tbl_Songs";
+    public static final String TABLE_PLAYLISTS = "tbl_Playlists";
     public static final String MyPREFERENCES = "MusicAppPrefs" ;
 
 
@@ -27,6 +28,7 @@ public class DBHandler extends SQLiteOpenHelper {
     public static final String EMAIL = "EMAIL";
     public static final String PASSWORD = "PASSWORD";
     public static final String SONG_NAME = "NAME";
+    public static final String PLAYLIST_NAME = "NAME";
     public static final String SONG_PATH = "PATH";
     String packageName = "";
 
@@ -44,6 +46,7 @@ public class DBHandler extends SQLiteOpenHelper {
         //  db= this.getWritableDatabase();
 //        createBodyParts(db);
         createSongs(db);
+        createPlaylistTable(db);
 
         String CREATE_TABLE = ("Create table " + TABLE_USERS + "(ID INTEGER PRIMARY KEY AUTOINCREMENT ," +
                 "NAME TEXT," +
@@ -61,6 +64,13 @@ public class DBHandler extends SQLiteOpenHelper {
 
         db.execSQL(CREATE_TABLE);
         songRecord(db);
+    }
+    private void createPlaylistTable(SQLiteDatabase db) {
+        String CREATE_TABLE = ("Create table " + TABLE_PLAYLISTS + "(ID INTEGER PRIMARY KEY AUTOINCREMENT ," +
+                "NAME TEXT)");
+
+        db.execSQL(CREATE_TABLE);
+        createMyPlaylist(db);
     }
     public void songRecord(SQLiteDatabase mydb) {
         try{
@@ -86,6 +96,16 @@ public class DBHandler extends SQLiteOpenHelper {
                 myvalues.put(SONG_PATH, arr.getJSONObject(i).getString("path"));
                 mydb.insert(TABLE_SONGS, null, myvalues);
             }
+        }catch(Exception e){
+
+        }
+    }
+    public void createMyPlaylist(SQLiteDatabase mydb) {
+        try{
+            ContentValues myvalues = new ContentValues();
+            myvalues.put(PLAYLIST_NAME, "My Playlist");
+            mydb.insert(TABLE_PLAYLISTS, null, myvalues);
+
         }catch(Exception e){
 
         }
@@ -139,5 +159,26 @@ public class DBHandler extends SQLiteOpenHelper {
             list.add(joined);
         }
         return list;
+    }
+
+    public boolean savePlaylist(String name) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues vals = new ContentValues();
+        vals.put(PLAYLIST_NAME, name);
+        long i = db.insert(TABLE_PLAYLISTS, null, vals);
+        return i != -1;
+    }
+
+    public ArrayList getPlayListList() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ArrayList arr = new ArrayList();
+        Cursor cursor = db.rawQuery("select  * FROM " + TABLE_PLAYLISTS, null);
+        while(cursor.moveToNext()){
+            String joined = cursor.getString(1) ;
+            arr.add(joined);
+        }
+
+        return  arr;
+
     }
 }
