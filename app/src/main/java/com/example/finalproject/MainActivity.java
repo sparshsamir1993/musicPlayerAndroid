@@ -2,6 +2,7 @@ package com.example.finalproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,12 +12,19 @@ public class MainActivity extends AppCompatActivity {
 
     DBHandler db;
     Button signIn, signUp;
+    SharedPreferencesUtil shrdUtil;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        db = new DBHandler(this);
+        db = new DBHandler(this, getPackageName());
+        shrdUtil = new SharedPreferencesUtil(this);
+        ContentValues vals = shrdUtil.getUserInSession();
+        if(vals.get("userId") != null && vals.get("userId").toString().length() >0){
+            Intent toLibrary = new Intent(MainActivity.this, Library.class);
+            startActivity(toLibrary);
+        }
         signIn = findViewById(R.id.signInButton);
         signUp = findViewById(R.id.signUpButton);
 

@@ -20,7 +20,7 @@ public class SignIn extends AppCompatActivity {
         emailField = findViewById(R.id.email);
         passwordField = findViewById(R.id.password);
         signinButton = findViewById(R.id.signin);
-        db =  new DBHandler(SignIn.this);
+        db =  new DBHandler(SignIn.this, getPackageName());
 
         signinButton.setOnClickListener(new View.OnClickListener() {
             @Override

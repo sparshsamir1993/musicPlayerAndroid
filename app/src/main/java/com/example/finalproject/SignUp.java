@@ -24,7 +24,7 @@ public class SignUp extends AppCompatActivity {
         passwordField = findViewById(R.id.password);
         confirmField = findViewById(R.id.confirmPassword);
         registerButton = findViewById(R.id.registerButton);
-        db = new DBHandler(SignUp.this);
+        db = new DBHandler(SignUp.this, getPackageName());
 
 
         registerButton.setOnClickListener(new View.OnClickListener() {
