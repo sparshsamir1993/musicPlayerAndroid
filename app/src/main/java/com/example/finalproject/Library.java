@@ -1,6 +1,12 @@
 package com.example.finalproject;
 
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -14,17 +20,47 @@ public class Library extends AppCompatActivity {
     ArrayAdapter libraryDetails;
     ArrayList songList;
     DBHandler db;
-
+    MediaPlayer mediaPlayer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_library);
         db = new DBHandler(getApplicationContext(), getPackageName());
         library = findViewById(R.id.musicLibrary);
-
+        mediaPlayer = new MediaPlayer();
         songList = db.getSongList();
         libraryDetails = new ArrayAdapter(getApplicationContext(),android.R.layout.simple_spinner_item,songList);
         library.setAdapter(libraryDetails);
+        library.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                try{
+
+                    String song = libraryDetails.getItem(position).toString();
+                    String[] s = song.split("\\${4}");
+                    Uri songPath = Uri.parse(s[1]);
+                    Log.i("error",  s[1]);
+
+                    if(mediaPlayer.isPlaying()){
+                        mediaPlayer.stop();
+                        mediaPlayer.reset();
+                        mediaPlayer.release();
+
+                    }
+
+                    mediaPlayer = MediaPlayer.create(getApplicationContext(), songPath);
+
+
+                    mediaPlayer.start();
+
+
+                }catch (Exception e){
+                    Log.i("error",  e.getMessage());
+                }
+
+            }
+        });
 
     }
 
