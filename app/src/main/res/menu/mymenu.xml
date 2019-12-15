@@ -6,8 +6,9 @@
     <item android:id="@+id/newPlayList"
         android:title="Add new playlist"/>
 
-    <item android:id="@+id/viewPlayLists"
-        android:title="View Playlists"/>
+    <item android:id="@+id/sessionManage"
+        android:title="Login"/>
+
 
 
 
